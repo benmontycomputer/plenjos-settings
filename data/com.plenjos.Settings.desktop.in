@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=PlenjOS Settings
+Exec=plenjos-settings
+Icon=org.gnome.Settings
+Terminal=false
+Type=Application
+Categories=GTK;Settings;
+StartupNotify=true
+StartupWMClass=plenjos-settings

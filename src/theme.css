@@ -1,0 +1,83 @@
+#settings_window {
+  background-color: rgba(51, 48, 47, 0.6);
+}
+
+#network_settings_window {
+  background-color: #33302F;
+}
+
+#network_settings_window_stack_switcher * {
+  margin: 4px;
+  /*border-radius: 12px;*/
+  min-height: 32px;
+}
+
+#settings_list_box row {
+  border-width: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#settings_header_bar {
+  border-bottom-color: transparent;
+  background-color: transparent;
+}
+
+#settings_secondary_header_bar {
+  border-bottom-color: transparent;
+  background-color: transparent;
+}
+
+#network_settings_header_bar {
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+/* The horizontal padding on this is less than on similar side panels
+   in PlenjOS so the images visually line up with text in other apps. */
+.settings_stack_item {
+  min-height: 32px;
+  padding: 0px 6px;
+  margin: 2px 8px 0px 8px;
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+  border-radius: 6px;
+}
+
+.settings_stack_item:hover {
+  background-color: rgba(127, 127, 127, 0.2);
+}
+
+.settings_stack_item:selected {
+  background-color: #3584e4;
+}
+
+/*#display_settings_displays_box {
+  padding: 32px;
+}
+
+.display_settings_display {
+  margin: 32px;
+  min-width: 240px;
+  min-height: 160px;
+  border: 2px solid gray;
+  border-radius: 24px;
+  background-color: #333388;
+  transition-duration: 0.1s;
+}
+
+.display_settings_display:hover {
+  margin: 32px;
+  min-width: 240px;
+  min-height: 160px;
+  border: 2px solid gray;
+  border-radius: 24px;
+  background-color: #434398;
+  transition-duration: 0.1s;
+}
+
+.display_settings_display:checked {
+  background-color: #5353A8;
+  transition-duration: 0.1s;
+}*/

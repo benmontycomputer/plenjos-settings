@@ -1,0 +1,7 @@
+data/com.plenjos.Settings.desktop.in
+data/com.plenjos.Settings.appdata.xml.in
+data/com.plenjos.Settings.gschema.xml
+src/settings-window.ui
+src/main.c
+src/settings-window.c
+
