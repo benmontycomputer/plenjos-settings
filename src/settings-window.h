@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include <libhandy-1/handy.h>
+#include <libadwaita-1/adwaita.h>
 
 #include "network-settings/network-settings-window.h"
 #include "display-settings-window.h"
@@ -29,7 +29,7 @@ G_BEGIN_DECLS
 
 #define SETTINGS_TYPE_WINDOW (settings_window_get_type())
 
-G_DECLARE_FINAL_TYPE (SettingsWindow, settings_window, SETTINGS, WINDOW, HdyApplicationWindow)
+G_DECLARE_FINAL_TYPE (SettingsWindow, settings_window, SETTINGS, WINDOW, AdwApplicationWindow)
 
 G_END_DECLS
 

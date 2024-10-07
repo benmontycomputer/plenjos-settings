@@ -47,13 +47,11 @@ network_settings_window_class_init (NetworkSettingsWindowClass *klass)
 static void
 network_settings_window_init (NetworkSettingsWindow *self)
 {
-  hdy_init ();
-
   gtk_widget_init_template (GTK_WIDGET (self));
 
   GtkCssProvider *cssProvider = gtk_css_provider_new();
   gtk_css_provider_load_from_resource (cssProvider, "/com/plenjos/Settings/theme.css");
-  gtk_style_context_add_provider_for_screen (gdk_screen_get_default (),
+  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
                                GTK_STYLE_PROVIDER (cssProvider),
                                GTK_STYLE_PROVIDER_PRIORITY_USER);
 
@@ -76,6 +74,4 @@ network_settings_window_init (NetworkSettingsWindow *self)
 
   gtk_stack_add_titled (self->main_stack, gtk_list_box_new (), "test", "Test");
   gtk_stack_add_titled (self->main_stack, label, "test2", "Test2");*/
-
-  gtk_widget_show_all (self->main_stack);
 }

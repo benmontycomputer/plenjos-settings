@@ -39,7 +39,7 @@ on_activate (GtkApplication *app)
 		                       "application", app,
 		                       NULL);
 
-  GdkPixbuf *icon_24 = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "systemsettings", 24, 0, NULL);
+  /* GdkPixbuf *icon_24 = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "systemsettings", 24, 0, NULL);
   GdkPixbuf *icon_32 = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "systemsettings", 32, 0, NULL);
   GdkPixbuf *icon_48 = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "systemsettings", 48, 0, NULL);
   GdkPixbuf *icon_64 = gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), "systemsettings", 64, 0, NULL);
@@ -67,7 +67,7 @@ on_activate (GtkApplication *app)
   g_object_unref (icon_64);
   g_object_unref (icon_96);
   g_object_unref (icon_128);
-  g_object_unref (icon_256);
+  g_object_unref (icon_256); */
 
 	/* Ask the window manager/compositor to present the window. */
 	gtk_window_present (window);
@@ -90,7 +90,7 @@ main (int   argc,
 	 * application windows, integration with the window manager/compositor, and
 	 * desktop features such as file opening and single-instance applications.
 	 */
-	app = gtk_application_new ("com.plenjos.Settings", G_APPLICATION_FLAGS_NONE);
+	app = gtk_application_new ("com.plenjos.Settings", G_APPLICATION_DEFAULT_FLAGS);
 
 	/*
 	 * We connect to the activate signal to create a window when the application

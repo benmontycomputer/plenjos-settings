@@ -19,9 +19,6 @@
 #pragma once
 
 #include <gtk/gtk.h>
-#include <gtk/gtkx.h>
-
-#include <libhandy-1/handy.h>
 
 #include <math.h>
 

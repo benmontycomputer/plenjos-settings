@@ -6,7 +6,7 @@ project('settings', 'c',
                    ],
 )
 
-dependency('libhandy-1', version: '>= 1.0.0')
+dependency('libadwaita-1', version: '>= 1.6')
 
 i18n = import('i18n')
 

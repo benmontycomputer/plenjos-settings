@@ -20,8 +20,6 @@
 
 #include <gtk/gtk.h>
 
-#include <libhandy-1/handy.h>
-
 #include <NetworkManager.h>
 #include <libnma/nma-ui-utils.h>
 
