@@ -28,18 +28,19 @@ struct _NetworkSettingsWindow
   NMClient *nm_client;
 };
 
-G_DEFINE_TYPE (NetworkSettingsWindow, network_settings_window, ADW_TYPE_NAVIGATION_PAGE)
+G_DEFINE_TYPE(NetworkSettingsWindow, network_settings_window, ADW_TYPE_NAVIGATION_PAGE)
 
 static void
-network_settings_window_class_init (NetworkSettingsWindowClass *klass)
+network_settings_window_class_init(NetworkSettingsWindowClass *klass)
 {
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/com/plenjos/Settings/network/network-settings-window.ui");
-  gtk_widget_class_bind_template_child (widget_class, NetworkSettingsWindow, interfaces_group);
+  gtk_widget_class_set_template_from_resource(widget_class, "/com/plenjos/Settings/network/network-settings-window.ui");
+  gtk_widget_class_bind_template_child(widget_class, NetworkSettingsWindow, interfaces_group);
 }
 
-typedef struct NetworkSettingsInterface {
+typedef struct NetworkSettingsInterface
+{
   AdwPreferencesRow *iface_row;
   AdwDialog *iface_dialog;
   AdwHeaderBar *header_bar;
@@ -50,15 +51,22 @@ typedef struct NetworkSettingsInterface {
   NetworkSettingsWindow *self;
 } NetworkSettingsInterface;
 
-static void on_iface_activated (AdwActionRow *row, NetworkSettingsInterface *iface) {
-  adw_dialog_present (iface->iface_dialog, GTK_WIDGET (row));
+static void on_iface_activated(AdwActionRow *row, NetworkSettingsInterface *iface)
+{
+  adw_dialog_present(iface->iface_dialog, GTK_WIDGET(row));
 }
 
-static GtkWidget *create_net_interface (NMDevice *device, NetworkSettingsWindow *self) {
-  const char *description = nm_device_get_description (device);
-  const char *name = nm_device_get_iface (device);
+static void on_iface_dialog_close_attempt(AdwDialog *dialog, NetworkSettingsInterface *iface)
+{
+  gtk_widget_hide(GTK_WIDGET(dialog));
+}
 
-  NetworkSettingsInterface *iface = malloc (sizeof (NetworkSettingsInterface));
+static GtkWidget *create_net_interface(NMDevice *device, NetworkSettingsWindow *self)
+{
+  const char *description = nm_device_get_description(device);
+  const char *name = nm_device_get_iface(device);
+
+  NetworkSettingsInterface *iface = malloc(sizeof(NetworkSettingsInterface));
 
   iface->self = self;
   iface->iface_row = NULL;
@@ -70,50 +78,54 @@ static GtkWidget *create_net_interface (NMDevice *device, NetworkSettingsWindow 
 
   iface->self = self;
 
-  size_t title_len = strlen (description) + strlen (name) + strlen (" ()") + 1;
-  iface->title = malloc (title_len);
-  snprintf (iface->title, title_len, "%s (%s)", description, name);
+  size_t title_len = strlen(description) + strlen(name) + strlen(" ()") + 1;
+  iface->title = malloc(title_len);
+  snprintf(iface->title, title_len, "%s (%s)", description, name);
 
-  iface->navpage_box = GTK_BOX (gtk_box_new (GTK_ORIENTATION_VERTICAL, 0));
-  iface->header_bar = ADW_HEADER_BAR (adw_header_bar_new ());
-  adw_header_bar_set_show_back_button (iface->header_bar, TRUE);
-  gtk_box_append (iface->navpage_box, GTK_WIDGET (iface->header_bar));
+  iface->navpage_box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
+  iface->header_bar = ADW_HEADER_BAR(adw_header_bar_new());
+  adw_header_bar_set_show_back_button(iface->header_bar, TRUE);
+  gtk_box_append(iface->navpage_box, GTK_WIDGET(iface->header_bar));
 
-  iface->iface_dialog = adw_dialog_new ();
-  adw_dialog_set_child (iface->iface_dialog, GTK_WIDGET (iface->navpage_box));
-  adw_dialog_set_presentation_mode (iface->iface_dialog, ADW_DIALOG_FLOATING);
-  adw_dialog_set_title (iface->iface_dialog, iface->title);
+  iface->iface_dialog = adw_dialog_new();
+  adw_dialog_set_child(iface->iface_dialog, GTK_WIDGET(iface->navpage_box));
+  adw_dialog_set_presentation_mode(iface->iface_dialog, ADW_DIALOG_FLOATING);
+  adw_dialog_set_title(iface->iface_dialog, iface->title);
+  adw_dialog_set_can_close(iface->iface_dialog, FALSE);
+  g_signal_connect(iface->iface_dialog, "close_attempt", G_CALLBACK(on_iface_dialog_close_attempt), iface);
 
-  iface->iface_row = ADW_PREFERENCES_ROW (adw_action_row_new ());
-  adw_preferences_row_set_title (iface->iface_row, iface->title);
-  // adw_action_row_set_activatable_widget (ADW_ACTION_ROW (iface->iface_row), GTK_WIDGET (iface->iface_dialog));
-  g_signal_connect (iface->iface_row, "activated", G_CALLBACK (on_iface_activated), iface);
+  iface->iface_row = ADW_PREFERENCES_ROW(adw_action_row_new());
+  adw_preferences_row_set_title(iface->iface_row, iface->title);
+  adw_action_row_set_activatable_widget(ADW_ACTION_ROW(iface->iface_row), GTK_WIDGET(iface->iface_dialog));
+  adw_action_row_add_suffix(ADW_ACTION_ROW(iface->iface_row), GTK_WIDGET(gtk_image_new_from_icon_name("go-next")));
+  g_signal_connect(iface->iface_row, "activated", G_CALLBACK(on_iface_activated), iface);
 
-  return GTK_WIDGET (iface->iface_row);
+  return GTK_WIDGET(iface->iface_row);
 }
 
 static void
-network_settings_window_init (NetworkSettingsWindow *self)
+network_settings_window_init(NetworkSettingsWindow *self)
 {
-  gtk_widget_init_template (GTK_WIDGET (self));
+  gtk_widget_init_template(GTK_WIDGET(self));
 
   GtkCssProvider *cssProvider = gtk_css_provider_new();
-  gtk_css_provider_load_from_resource (cssProvider, "/com/plenjos/Settings/theme.css");
-  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
-                               GTK_STYLE_PROVIDER (cssProvider),
-                               GTK_STYLE_PROVIDER_PRIORITY_USER);
+  gtk_css_provider_load_from_resource(cssProvider, "/com/plenjos/Settings/theme.css");
+  gtk_style_context_add_provider_for_display(gdk_display_get_default(),
+                                             GTK_STYLE_PROVIDER(cssProvider),
+                                             GTK_STYLE_PROVIDER_PRIORITY_USER);
 
-  self->nm_client = nm_client_new (NULL, NULL);
+  self->nm_client = nm_client_new(NULL, NULL);
 
   if (self->nm_client)
-		g_print ("NetworkManager version: %s\n", nm_client_get_version (self->nm_client));
+    g_print("NetworkManager version: %s\n", nm_client_get_version(self->nm_client));
 
-  const GPtrArray *devices = nm_client_get_devices (self->nm_client);
+  const GPtrArray *devices = nm_client_get_devices(self->nm_client);
 
-  for (size_t i = 0; i < devices->len; i++) {
-    printf ("Device: %s\n", nm_device_get_iface (NM_DEVICE (devices->pdata[i])));
+  for (size_t i = 0; i < devices->len; i++)
+  {
+    printf("Device: %s\n", nm_device_get_iface(NM_DEVICE(devices->pdata[i])));
 
-    adw_preferences_group_add (self->interfaces_group, create_net_interface (NM_DEVICE (devices->pdata[i]), self));
+    adw_preferences_group_add(self->interfaces_group, create_net_interface(NM_DEVICE(devices->pdata[i]), self));
   }
-  fflush (stdout);
+  fflush(stdout);
 }
