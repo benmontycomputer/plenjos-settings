@@ -1,4 +1,4 @@
-/* network-settings-window.h
+/* appearance-settings-window.h
  *
  * Copyright 2023 Benjamin Montgomery
  *
@@ -19,14 +19,16 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <adwaita.h>
 
-#include <NetworkManager.h>
-#include <libnma/nma-ui-utils.h>
+#include <math.h>
+
+#include <stdlib.h>
 
 G_BEGIN_DECLS
 
-#define NETWORK_SETTINGS_TYPE_WINDOW (network_settings_window_get_type())
+#define APPEARANCE_SETTINGS_TYPE_WINDOW (appearance_settings_window_get_type())
 
-G_DECLARE_FINAL_TYPE (NetworkSettingsWindow, network_settings_window, NETWORK_SETTINGS, WINDOW, GtkBox)
+G_DECLARE_FINAL_TYPE (AppearanceSettingsWindow, appearance_settings_window, APPEARANCE_SETTINGS, WINDOW, AdwNavigationPage)
 
 G_END_DECLS

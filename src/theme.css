@@ -14,12 +14,13 @@
    in PlenjOS so the images visually line up with text in other apps. */
 #settings_stack_item {
   min-height: 32px;
-  padding: 0px 6px;
+  padding: 2px;
   margin: 2px 8px 0px 8px;
   background-color: transparent;
   box-shadow: none;
   border: none;
   border-radius: 6px;
+  -gtk-icon-size: 32px;
 }
 
 #settings_stack_item:hover {
@@ -28,6 +29,10 @@
 
 #settings_stack_item:selected {
   background-color: #3584e4;
+}
+
+#settings_stack_spacer {
+  margin-top: 6px;
 }
 
 /*#display_settings_displays_box {

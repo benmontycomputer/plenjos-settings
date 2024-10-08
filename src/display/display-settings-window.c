@@ -35,7 +35,7 @@ display_settings_window_class_init (DisplaySettingsWindowClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/com/plenjos/Settings/display-settings-window.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/com/plenjos/Settings/display/display-settings-window.ui");
   gtk_widget_class_bind_template_child (widget_class, DisplaySettingsWindow, displays_box);
 }
 

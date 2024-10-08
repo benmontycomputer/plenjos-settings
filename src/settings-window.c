@@ -23,7 +23,7 @@ struct _SettingsWindow
 {
   AdwApplicationWindow parent_instance;
 
-  GtkStackSwitcher *stack_switcher;
+  GtkBox *sidebar_box;
   GtkStack *main_stack;
   AdwNavigationSplitView *split_view;
 };
@@ -36,7 +36,7 @@ settings_window_class_init(SettingsWindowClass *klass)
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
   gtk_widget_class_set_template_from_resource(widget_class, "/com/plenjos/Settings/settings-window.ui");
-  gtk_widget_class_bind_template_child(widget_class, SettingsWindow, stack_switcher);
+  gtk_widget_class_bind_template_child(widget_class, SettingsWindow, sidebar_box);
   gtk_widget_class_bind_template_child(widget_class, SettingsWindow, main_stack);
   gtk_widget_class_bind_template_child(widget_class, SettingsWindow, split_view);
 }
@@ -116,6 +116,14 @@ GtkWidget *create_stack_item(SettingsWindow *self,
   return GTK_WIDGET(item);
 }
 
+GtkWidget *create_stack_spacer()
+{
+  GtkWidget *widget = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+  gtk_widget_set_size_request(widget, 0, 0);
+  gtk_widget_set_name(widget, "settings_stack_spacer");
+  return widget;
+}
+
 static void
 settings_window_init(SettingsWindow *self)
 {
@@ -129,28 +137,33 @@ settings_window_init(SettingsWindow *self)
                                              GTK_STYLE_PROVIDER(cssProvider),
                                              GTK_STYLE_PROVIDER_PRIORITY_USER);
 
-  // TODO: flip the close buttons to the other header bar depending on where they should be
-
-  GtkBox *box = GTK_BOX(gtk_widget_get_parent(GTK_WIDGET(self->stack_switcher)));
-
   NetworkSettingsWindow *network_settings = g_object_new(NETWORK_SETTINGS_TYPE_WINDOW, NULL);
   DisplaySettingsWindow *display_settings = g_object_new(DISPLAY_SETTINGS_TYPE_WINDOW, NULL);
+  AppearanceSettingsWindow *appearance_settings = g_object_new(APPEARANCE_SETTINGS_TYPE_WINDOW, NULL);
 
-  // adw_header_bar_set_title(self->secondary_header_bar, "Network Settings");
+  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(network_settings), "Network", "Network");
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "Network", "Network", "preferences-system-network"));
 
-  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(network_settings), "Network Settings", "Network Settings");
-  gtk_box_append(box, create_stack_item(self, "Network Settings", "Network Settings", "preferences-system-network"));
+  GtkWidget *bluetooth_settings = bluetooth_settings_widget_new();
 
-  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(display_settings), "Display Settings", "Display Settings");
-  gtk_box_append(box, create_stack_item(self, "Display Settings", "Display Settings", "preferences-desktop-display"));
+  GtkBox *bluetooth_settings_box = GTK_BOX(gtk_box_new(GTK_ORIENTATION_VERTICAL, 0));
+
+  gtk_box_append(bluetooth_settings_box, adw_header_bar_new());
+  gtk_box_append(bluetooth_settings_box, bluetooth_settings);
+
+  AdwNavigationPage *bluetooth_page = adw_navigation_page_new(GTK_WIDGET(bluetooth_settings_box), "Bluetooth");
+
+  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(bluetooth_page), "Bluetooth", "Bluetooth");
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "Bluetooth", "Bluetooth", "bluetooth-active"));
+
+  gtk_box_append(self->sidebar_box, create_stack_spacer());
+
+  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(display_settings), "Displays", "Displays");
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "Displays", "Displays", "preferences-desktop-display"));
+
+  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(appearance_settings), "Appearance", "Appearance");
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "Appearance", "Appearance", "preferences-desktop-theme"));
 
   gtk_stack_add_titled(self->main_stack, gtk_label_new("Test 3"), "test3", "Test3");
-  gtk_box_append(box, create_stack_item(self, "test3", "Test3", "preferences-system"));
-
-  GValue network_icon_name = G_VALUE_INIT;
-  g_value_init(&network_icon_name, G_TYPE_STRING);
-  g_value_set_string(&network_icon_name, "preferences-system-network");
-
-  // gtk_container_child_set_property (GTK_CONTAINER (self->main_stack), GTK_WIDGET (network_settings), "icon-name", &network_icon_name);
-  // gtk_container_foreach(GTK_CONTAINER(self->main_stack), stack_switcher_set_halign, NULL);
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "test3", "Test3", "preferences-system"));
 }

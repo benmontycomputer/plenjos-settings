@@ -1,4 +1,4 @@
-/* settings-window.h
+/* network-settings-window.h
  *
  * Copyright 2023 Benjamin Montgomery
  *
@@ -19,21 +19,16 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <adwaita.h>
 
-#include <libadwaita-1/adwaita.h>
-
-#include "network/network-settings-window.h"
-#include "display/display-settings-window.h"
-#include "appearance/appearance-settings-window.h"
-
-#include <gnome-bluetooth-3.0/bluetooth-settings-widget.h>
+#include <NetworkManager.h>
+#include <nma-ui-utils.h>
+#include <nma-wifi-dialog.h>
 
 G_BEGIN_DECLS
 
-#define SETTINGS_TYPE_WINDOW (settings_window_get_type())
+#define NETWORK_SETTINGS_TYPE_WINDOW (network_settings_window_get_type())
 
-G_DECLARE_FINAL_TYPE (SettingsWindow, settings_window, SETTINGS, WINDOW, AdwApplicationWindow)
+G_DECLARE_FINAL_TYPE(NetworkSettingsWindow, network_settings_window, NETWORK_SETTINGS, WINDOW, AdwNavigationPage)
 
 G_END_DECLS
-
-#define G_VALUE_INIT  { 0, { { 0 } } }

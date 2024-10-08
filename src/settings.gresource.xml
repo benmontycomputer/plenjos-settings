@@ -2,8 +2,9 @@
 <gresources>
   <gresource prefix="/com/plenjos/Settings">
     <file>settings-window.ui</file>
-    <file>network-settings/network-settings-window.ui</file>
-    <file>display-settings-window.ui</file>
+    <file>network/network-settings-window.ui</file>
+    <file>display/display-settings-window.ui</file>
+    <file>appearance/appearance-settings-window.ui</file>
     <file>theme.css</file>
   </gresource>
 </gresources>

@@ -1,4 +1,8 @@
 {
     "C_Cpp.default.configurationProvider": "mesonbuild.mesonbuild",
-    "C_Cpp.default.compileCommands": "/home/plenjamin/Projects/plenjos-settings/builddir/compile_commands.json"
+    "C_Cpp.default.compileCommands": "/home/plenjamin/Projects/plenjos-settings/builddir/compile_commands.json",
+    "files.associations": {
+        "network-settings-window.h": "c",
+        "appearance-settings-window.h": "c"
+    }
 }

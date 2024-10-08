@@ -21,7 +21,7 @@
 
 struct _NetworkSettingsWindow
 {
-  GtkBox  parent_instance;
+  AdwNavigationPage parent_instance;
 
   GtkStackSwitcher *stack_switcher;
 
@@ -30,14 +30,14 @@ struct _NetworkSettingsWindow
   NMClient *nm_client;
 };
 
-G_DEFINE_TYPE (NetworkSettingsWindow, network_settings_window, GTK_TYPE_BOX)
+G_DEFINE_TYPE (NetworkSettingsWindow, network_settings_window, ADW_TYPE_NAVIGATION_PAGE)
 
 static void
 network_settings_window_class_init (NetworkSettingsWindowClass *klass)
 {
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/com/plenjos/Settings/network-settings/network-settings-window.ui");
+  gtk_widget_class_set_template_from_resource (widget_class, "/com/plenjos/Settings/network/network-settings-window.ui");
   gtk_widget_class_bind_template_child (widget_class, NetworkSettingsWindow, stack_switcher);
   gtk_widget_class_bind_template_child (widget_class, NetworkSettingsWindow, main_stack);
 }
