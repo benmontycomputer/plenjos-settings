@@ -41,23 +41,4 @@ static void
 appearance_settings_window_init(AppearanceSettingsWindow *self)
 {
   gtk_widget_init_template(GTK_WIDGET(self));
-
-  AdwPreferencesGroup *bg_group = ADW_PREFERENCES_GROUP (adw_preferences_group_new ());
-  adw_preferences_group_set_title (bg_group, "Background");
-
-  AdwActionRow *bg_placeholder = ADW_ACTION_ROW (adw_action_row_new ());
-  adw_action_row_set_subtitle (bg_placeholder, "pl");
-  adw_preferences_group_add (bg_group, GTK_WIDGET (bg_placeholder));
-
-  adw_preferences_page_add (self->appearance_settings_preferences_page, bg_group);
-
-  AdwPreferencesGroup *theme_group = ADW_PREFERENCES_GROUP (adw_preferences_group_new ());
-  adw_preferences_group_set_title (theme_group, "Theme");
-
-  adw_preferences_page_add (self->appearance_settings_preferences_page, theme_group);
-
-  AdwPreferencesGroup *icons_group = ADW_PREFERENCES_GROUP (adw_preferences_group_new ());
-  adw_preferences_group_set_title (icons_group, "Icons");
-
-  adw_preferences_page_add (self->appearance_settings_preferences_page, icons_group);
 }

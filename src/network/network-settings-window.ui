@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.38.2 -->
 <interface>
-  <requires lib="gtk+" version="3.24"/>
+  <requires lib="gtk+" version="3.24" />
   <template class="NetworkSettingsWindow" parent="AdwNavigationPage">
     <property name="name">network_settings_window</property>
     <property name="title">Network Settings</property>
@@ -18,25 +18,15 @@
           </object>
         </child>
         <child>
-          <object class="GtkStack" id="main_stack">
-            <property name="name">network_settings_main_stack</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
+          <object class="AdwPreferencesPage" id="network_settings_preferences_page">
+            <property name="name">network_settings_preferences_page</property>
+            <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <child>
-              <placeholder/>
+              <object class="AdwPreferencesGroup" id="interfaces_group">
+                <property name="title">Interfaces</property>
+              </object>
             </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkStackSwitcher" id="stack_switcher">
-            <property name="name">network_settings_window_stack_switcher</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="halign">center</property>
-            <property name="margin-top">8</property>
-            <property name="margin-bottom">8</property>
-            <property name="stack">main_stack</property>
           </object>
         </child>
       </object>

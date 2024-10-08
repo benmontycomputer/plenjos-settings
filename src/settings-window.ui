@@ -11,7 +11,7 @@
     <property name="title">Settings</property>
     <child>
       <object class="AdwBreakpoint">
-        <condition>max-width: 400sp</condition>
+        <condition>max-width: 800sp</condition>
         <setter object="split_view" property="collapsed">True</setter>
       </object>
     </child>
@@ -50,6 +50,7 @@
                 <property name="can-focus">False</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
+                <property name="hhomogeneous">False</property>
                 <child>
                   <placeholder/>
                 </child>
