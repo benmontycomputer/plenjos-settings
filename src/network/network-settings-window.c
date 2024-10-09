@@ -84,12 +84,12 @@ static void aps_foreach(gpointer ap_ptr, NetworkSettingsInterface *iface)
   g_signal_connect(row, "activated", G_CALLBACK(on_wifi_activated), ap);
 
   // adw_action_row_add_suffix(row, nma_wifi_dialog_new_for_create(iface->self->nm_client));
-  GtkWidget *win = GTK_WIDGET(&iface->self->parent_instance);
+  /* GtkWidget *win = GTK_WIDGET(&iface->self->parent_instance);
   while (!GTK_IS_WINDOW(win) && GTK_IS_WIDGET(win))
   {
     win = gtk_widget_get_parent(win);
   }
-  nma_mobile_wizard_new(GTK_WINDOW (win), NULL, NM_DEVICE_MODEM_CAPABILITY_NONE, TRUE, NULL, NULL);
+  nma_mobile_wizard_new(GTK_WINDOW (win), NULL, NM_DEVICE_MODEM_CAPABILITY_NONE, TRUE, NULL, NULL); */
 
   adw_preferences_group_add(iface->wifi_group, GTK_WIDGET(row));
 }
