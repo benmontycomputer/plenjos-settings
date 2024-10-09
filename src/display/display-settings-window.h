@@ -19,6 +19,7 @@
 #pragma once
 
 #include <gtk/gtk.h>
+#include <adwaita.h>
 
 #include <math.h>
 
@@ -28,6 +29,6 @@ G_BEGIN_DECLS
 
 #define DISPLAY_SETTINGS_TYPE_WINDOW (display_settings_window_get_type())
 
-G_DECLARE_FINAL_TYPE (DisplaySettingsWindow, display_settings_window, DISPLAY_SETTINGS, WINDOW, GtkBox)
+G_DECLARE_FINAL_TYPE (DisplaySettingsWindow, display_settings_window, DISPLAY_SETTINGS, WINDOW, AdwNavigationPage)
 
 G_END_DECLS

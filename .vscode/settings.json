@@ -4,5 +4,6 @@
     "files.associations": {
         "network-settings-window.h": "c",
         "appearance-settings-window.h": "c"
-    }
+    },
+    "cmake.sourceDirectory": "/home/plenjamin/Projects/plenjos-settings/build/meson-private/__CMake_compiler_info__"
 }

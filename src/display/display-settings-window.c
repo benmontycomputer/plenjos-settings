@@ -21,22 +21,22 @@
 
 struct _DisplaySettingsWindow
 {
-  GtkBox  parent_instance;
+  AdwNavigationPage parent_instance;
 
   GtkBox *displays_box;
 
   GSList *displays_list;
 };
 
-G_DEFINE_TYPE (DisplaySettingsWindow, display_settings_window, GTK_TYPE_BOX)
+G_DEFINE_TYPE(DisplaySettingsWindow, display_settings_window, ADW_TYPE_NAVIGATION_PAGE)
 
 static void
-display_settings_window_class_init (DisplaySettingsWindowClass *klass)
+display_settings_window_class_init(DisplaySettingsWindowClass *klass)
 {
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(klass);
 
-  gtk_widget_class_set_template_from_resource (widget_class, "/com/plenjos/Settings/display/display-settings-window.ui");
-  gtk_widget_class_bind_template_child (widget_class, DisplaySettingsWindow, displays_box);
+  gtk_widget_class_set_template_from_resource(widget_class, "/com/plenjos/Settings/display/display-settings-window.ui");
+  gtk_widget_class_bind_template_child(widget_class, DisplaySettingsWindow, displays_box);
 }
 
 /* GtkWidget *add_display_widget (GdkDisplay *display, DisplaySettingsWindow *self) {
@@ -59,13 +59,7 @@ display_settings_window_class_init (DisplaySettingsWindowClass *klass)
 } */
 
 static void
-display_settings_window_init (DisplaySettingsWindow *self)
+display_settings_window_init(DisplaySettingsWindow *self)
 {
-  gtk_widget_init_template (GTK_WIDGET (self));
-
-  GtkCssProvider *cssProvider = gtk_css_provider_new();
-  gtk_css_provider_load_from_resource (cssProvider, "/com/plenjos/Settings/theme.css");
-  gtk_style_context_add_provider_for_display (gdk_display_get_default (),
-                               GTK_STYLE_PROVIDER (cssProvider),
-                               GTK_STYLE_PROVIDER_PRIORITY_USER);
+  gtk_widget_init_template(GTK_WIDGET(self));
 }

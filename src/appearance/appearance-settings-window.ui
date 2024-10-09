@@ -57,10 +57,12 @@
                   <object class="AdwPreferencesRow">
                     <property name="title" translatable="yes">File</property>
                     <child>
-                      <object class="GtkImage" id="bg_image">
+                      <object class="GtkPicture" id="bg_picture">
                         <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="icon-name">system-file-manager</property>
+                        <property name="vexpand">False</property>
+                        <property name="height-request">960</property>
+                        <property name="can-shrink">True</property>
+                        <property name="keep-aspect-ratio">True</property>
                       </object>
                     </child>
                   </object>

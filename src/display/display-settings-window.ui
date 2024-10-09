@@ -2,33 +2,20 @@
 <!-- Generated with glade 3.40.0 -->
 <interface>
   <requires lib="gtk" version="4.16"/>
-  <template class="DisplaySettingsWindow" parent="GtkBox">
+  <template class="DisplaySettingsWindow" parent="AdwNavigationPage">
     <property name="name">display_settings_window</property>
-    <property name="can-focus">False</property>
-    <property name="hexpand">True</property>
-    <property name="vexpand">True</property>
-    <property name="orientation">vertical</property>
+    <property name="title">Display Settings</property>
     <child>
       <object class="GtkBox" id="displays_box">
         <property name="name">display_settings_displays_box</property>
-        <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="halign">center</property>
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
+        <property name="orientation">vertical</property>
         <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
+          <object class="AdwHeaderBar">
+            <property name="show-back-button">True</property>
+          </object>
         </child>
       </object>
-    </child>
-    <child>
-      <placeholder/>
     </child>
   </template>
 </interface>
