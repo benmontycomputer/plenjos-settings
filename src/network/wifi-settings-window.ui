@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 -->
+<interface>
+  <requires lib="gtk" version="4.16"/>
+  <object class="AdwNavigationPage" id="nav_page">
+    <property name="title" translatable="yes">Wi-Fi Networks</property>
+    <property name="child">
+      <object class="GtkBox">
+        <property name="can-focus">False</property>
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="AdwHeaderBar" id="wifi_settings_header_bar">
+            <property name="name">network_settings_header_bar</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="show-back-button">True</property>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesPage" id="wifi_settings_preferences_page">
+            <property name="name">wifi_settings_preferences_page</property>
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+            <child>
+              <object class="AdwPreferencesGroup" id="networks_group">
+                <property name="title">Interfaces</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
