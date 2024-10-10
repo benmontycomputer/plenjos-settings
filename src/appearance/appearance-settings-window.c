@@ -28,7 +28,7 @@ struct _AppearanceSettingsWindow
   GtkFileDialog *file_dialog;
   GSettings *bg_settings;
   GSettings *interface_settings;
-  GtkPicture *bg_picture;
+  GtkImage *bg_image;
 
   AdwPreferencesPage *appearance_settings_preferences_page;
 };
@@ -43,7 +43,7 @@ appearance_settings_window_class_init(AppearanceSettingsWindowClass *klass)
   gtk_widget_class_set_template_from_resource(widget_class, "/com/plenjos/Settings/appearance/appearance-settings-window.ui");
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, appearance_settings_preferences_page);
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_selector);
-  gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_picture);
+  gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_image);
 }
 
 static void on_bg_selector_ready(GObject *source_object, GAsyncResult *res, AppearanceSettingsWindow *self)
@@ -92,13 +92,13 @@ appearance_settings_window_init(AppearanceSettingsWindow *self)
   if (!strcmp(scheme, "prefer-dark"))
   {
     char *bg = g_settings_get_string(self->bg_settings, "picture-uri-dark");
-    gtk_picture_set_filename(self->bg_picture, (char *)(bg + 7));
+    gtk_image_set_from_file(self->bg_image, (char *)(bg + 7));
     free(bg);
   }
   else
   {
     char *bg = g_settings_get_string(self->bg_settings, "picture-uri");
-    gtk_picture_set_filename(self->bg_picture, (char *)(bg + 7));
+    gtk_image_set_from_file(self->bg_image, (char *)(bg + 7));
     free(bg);
   }
 

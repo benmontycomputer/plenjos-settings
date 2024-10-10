@@ -57,13 +57,22 @@
                   <object class="AdwPreferencesRow">
                     <property name="title" translatable="yes">File</property>
                     <child>
-                      <object class="GtkPicture" id="bg_picture">
+                      <object class="GtkBox">
                         <property name="hexpand">True</property>
-                        <property name="vexpand">False</property>
-                        <property name="height-request">960</property>
-                        <property name="can-shrink">True</property>
-                        <property name="keep-aspect-ratio">True</property>
-                      </object>
+                        <property name="vexpand">True</property>
+                        <property name="halign">fill</property>
+                        <property name="valign">fill</property>
+                        <child>
+                          <object class="GtkImage" id="bg_image">
+                            <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
+                            <property name="halign">fill</property>
+                            <property name="valign">fill</property>
+                            <property name="width-request">0</property>
+                            <property name="height-request">0</property>
+                          </object>
+                        </child>
+                    </object>
                     </child>
                   </object>
                 </child>
