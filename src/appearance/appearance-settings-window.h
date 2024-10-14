@@ -24,11 +24,16 @@
 #include <math.h>
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <stdbool.h>
 
 G_BEGIN_DECLS
 
 #define APPEARANCE_SETTINGS_TYPE_WINDOW (appearance_settings_window_get_type())
 
-G_DECLARE_FINAL_TYPE (AppearanceSettingsWindow, appearance_settings_window, APPEARANCE_SETTINGS, WINDOW, AdwNavigationPage)
+G_DECLARE_FINAL_TYPE(AppearanceSettingsWindow, appearance_settings_window, APPEARANCE_SETTINGS, WINDOW, AdwNavigationPage)
 
 G_END_DECLS

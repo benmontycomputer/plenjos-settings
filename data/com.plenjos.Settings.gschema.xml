@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="settings">
 	<schema id="com.plenjos.Settings" path="/com/plenjos/Settings/">
+		<key name="wallpapers" type="as">
+			<default>[]</default>
+			<summary>The wallpapers to show in the wallpaper picker</summary>
+			<description>
+				Each wallpaper should be followed by a path to its thumbnail.
+			</description>
+		</key>
 	</schema>
 </schemalist>

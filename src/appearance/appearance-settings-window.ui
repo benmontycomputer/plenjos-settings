@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.40.0 -->
 <interface>
-  <requires lib="gtk" version="4.16"/>
+  <requires lib="gtk" version="4.16" />
   <template class="AppearanceSettingsWindow" parent="AdwNavigationPage">
     <property name="name">appearance_settings_window</property>
     <property name="title">Appearance</property>
@@ -44,35 +44,38 @@
               <object class="AdwPreferencesGroup" id="bg_group">
                 <property name="title">Wallpaper</property>
                 <child>
+                  <object class="AdwPreferencesRow">
+                    <property name="title" translatable="yes">File</property>
+                    <property name="sensitive">False</property>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                          <object class="GtkImage" id="bg_image">
+                            <property name="width-request">240</property>
+                            <property name="height-request">240</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkFlowBox" id="bg_flow_box">
+                            <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
+                            <property name="halign">fill</property>
+                            <property name="valign">fill</property>
+                            <property name="homogeneous">True</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
                   <object class="AdwActionRow" id="bg_selector">
                     <property name="title" translatable="yes">Background</property>
                     <child>
                       <object class="GtkImage">
                         <property name="icon-name">system-file-manager-symbolic</property>
                       </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwPreferencesRow">
-                    <property name="title" translatable="yes">File</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="halign">fill</property>
-                        <property name="valign">fill</property>
-                        <child>
-                          <object class="GtkImage" id="bg_image">
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <property name="halign">fill</property>
-                            <property name="valign">fill</property>
-                            <property name="width-request">0</property>
-                            <property name="height-request">0</property>
-                          </object>
-                        </child>
-                    </object>
                     </child>
                   </object>
                 </child>

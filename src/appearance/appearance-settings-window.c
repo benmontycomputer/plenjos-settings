@@ -29,6 +29,7 @@ struct _AppearanceSettingsWindow
   GSettings *bg_settings;
   GSettings *interface_settings;
   GtkImage *bg_image;
+  GtkFlowBox *bg_flow_box;
 
   AdwPreferencesPage *appearance_settings_preferences_page;
 };
@@ -44,11 +45,14 @@ appearance_settings_window_class_init(AppearanceSettingsWindowClass *klass)
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, appearance_settings_preferences_page);
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_selector);
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_image);
+  gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_flow_box);
 }
 
 static void on_bg_selector_ready(GObject *source_object, GAsyncResult *res, AppearanceSettingsWindow *self)
 {
   GFile *result = gtk_file_dialog_open_finish(self->file_dialog, res, NULL);
+
+  g_return_if_fail(result);
 
   char *path = g_file_get_path(result);
 
@@ -77,8 +81,65 @@ static void on_bg_selector_activated(AdwActionRow *bg_selector, AppearanceSettin
   gtk_file_dialog_open(self->file_dialog, GTK_WINDOW(win), NULL, (GAsyncReadyCallback)on_bg_selector_ready, self);
 }
 
-static void
-appearance_settings_window_init(AppearanceSettingsWindow *self)
+static void load_background(char *bg, AppearanceSettingsWindow *self)
+{
+  printf("%s\n", bg);
+  fflush(stdout);
+
+  GdkPixbuf *pbuf = gdk_pixbuf_new_from_file_at_scale(bg, 240, -1, TRUE, NULL);
+
+  GtkImage *img = GTK_IMAGE(gtk_image_new_from_pixbuf(pbuf));
+  gtk_widget_set_size_request(GTK_WIDGET(img), 240, 240);
+
+  gtk_flow_box_append(self->bg_flow_box, GTK_WIDGET(img));
+}
+
+static void load_backgrounds(char *dir, AppearanceSettingsWindow *self, bool check_subdirs)
+{
+  struct dirent *dp;
+  DIR *dfd;
+
+  if ((dfd = opendir(dir)) == NULL)
+  {
+    fprintf(stderr, "Can't open %s\n", dir);
+    fflush(stderr);
+    return;
+  }
+
+  char filename[FILENAME_MAX];
+
+  while ((dp = readdir(dfd)) != NULL)
+  {
+    struct stat stbuf;
+    sprintf(filename, "%s/%s", dir, dp->d_name);
+    if (stat(filename, &stbuf) == -1)
+    {
+      printf("Unable to stat file: %s\n", filename);
+      continue;
+    }
+
+    if ((stbuf.st_mode & S_IFMT) == S_IFDIR)
+    {
+      if (check_subdirs)
+      {
+        char *new_dir = strdup(filename);
+        load_backgrounds(new_dir, self, false);
+        free(new_dir);
+      }
+    }
+    else
+    {
+      load_background(filename, self);
+    }
+  }
+}
+
+static void load_backgrounds_wrap(GTask *task, GObject *source_object, AppearanceSettingsWindow *self, GCancellable *cancellable)
+{
+  load_backgrounds("/usr/share/backgrounds", self, true);
+}
+
+static void appearance_settings_window_init(AppearanceSettingsWindow *self)
 {
   gtk_widget_init_template(GTK_WIDGET(self));
 
@@ -109,4 +170,9 @@ appearance_settings_window_init(AppearanceSettingsWindow *self)
 
   gtk_list_box_row_set_activatable(GTK_LIST_BOX_ROW(self->bg_selector), TRUE);
   g_signal_connect(self->bg_selector, "activated", G_CALLBACK(on_bg_selector_activated), self);
+
+  /*GTask *taskbar_task = g_task_new(self, NULL, NULL, NULL);
+  g_task_set_task_data(taskbar_task, self, NULL);
+  g_task_run_in_thread(taskbar_task, (GTaskThreadFunc)load_backgrounds_wrap);*/
+  // load_backgrounds("/usr/share/backgrounds", self, true);
 }

@@ -25,6 +25,9 @@
 #include <nma-ui-utils.h>
 #include <nma-wifi-dialog.h>
 
+#include <net/ethernet.h>
+#include <netinet/ether.h>
+
 G_BEGIN_DECLS
 
 #define NETWORK_SETTINGS_TYPE_WINDOW (network_settings_window_get_type())
