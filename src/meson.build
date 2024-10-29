@@ -4,6 +4,7 @@ settings_sources = [
   'network/network-settings-window.c',
   'display/display-settings-window.c',
   'appearance/appearance-settings-window.c',
+  'panel/panel-settings-window.c',
 ]
 
 cc = meson.get_compiler('c')
