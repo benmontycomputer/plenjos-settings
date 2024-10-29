@@ -23,6 +23,7 @@ struct _AppearanceSettingsWindow
 {
   AdwNavigationPage parent_instance;
 
+  AdwComboRow *theme_combo_row;
   AdwActionRow *bg_selector;
 
   GtkFileDialog *file_dialog;
@@ -43,6 +44,7 @@ appearance_settings_window_class_init(AppearanceSettingsWindowClass *klass)
 
   gtk_widget_class_set_template_from_resource(widget_class, "/com/plenjos/Settings/appearance/appearance-settings-window.ui");
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, appearance_settings_preferences_page);
+  gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, theme_combo_row);
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_selector);
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_image);
   gtk_widget_class_bind_template_child(widget_class, AppearanceSettingsWindow, bg_flow_box);
@@ -139,6 +141,18 @@ static void load_backgrounds_wrap(GTask *task, GObject *source_object, Appearanc
   load_backgrounds("/usr/share/backgrounds", self, true);
 }
 
+static void on_theme_selected(AdwComboRow *row, gpointer *idk, AppearanceSettingsWindow *self) {
+  guint item = adw_combo_row_get_selected(row);
+
+  if (item == 1) {
+    g_settings_set_string(self->interface_settings, "color-scheme", "prefer-light");
+  } else if (item == 2) {
+    g_settings_set_string(self->interface_settings, "color-scheme", "prefer-dark");
+  } else {
+    g_settings_set_string(self->interface_settings, "color-scheme", "default");
+  }
+}
+
 static void appearance_settings_window_init(AppearanceSettingsWindow *self)
 {
   gtk_widget_init_template(GTK_WIDGET(self));
@@ -155,12 +169,20 @@ static void appearance_settings_window_init(AppearanceSettingsWindow *self)
     char *bg = g_settings_get_string(self->bg_settings, "picture-uri-dark");
     gtk_image_set_from_file(self->bg_image, (char *)(bg + 7));
     free(bg);
+
+    adw_combo_row_set_selected(self->theme_combo_row, 2);
   }
   else
   {
     char *bg = g_settings_get_string(self->bg_settings, "picture-uri");
     gtk_image_set_from_file(self->bg_image, (char *)(bg + 7));
     free(bg);
+
+    if (!strcmp(scheme, "prefer-light")) {
+      adw_combo_row_set_selected(self->theme_combo_row, 1);
+    } else {
+      adw_combo_row_set_selected(self->theme_combo_row, 0);
+    }
   }
 
   if (scheme)
@@ -170,6 +192,8 @@ static void appearance_settings_window_init(AppearanceSettingsWindow *self)
 
   gtk_list_box_row_set_activatable(GTK_LIST_BOX_ROW(self->bg_selector), TRUE);
   g_signal_connect(self->bg_selector, "activated", G_CALLBACK(on_bg_selector_activated), self);
+
+  g_signal_connect(self->theme_combo_row, "notify::selected", G_CALLBACK(on_theme_selected), self);
 
   /*GTask *taskbar_task = g_task_new(self, NULL, NULL, NULL);
   g_task_set_task_data(taskbar_task, self, NULL);
