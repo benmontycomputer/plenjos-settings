@@ -6,6 +6,7 @@
     <file>network/wifi-settings-window.ui</file>
     <file>display/display-settings-window.ui</file>
     <file>appearance/appearance-settings-window.ui</file>
+    <file>panel/panel-settings-window.ui</file>
     <file>theme.css</file>
   </gresource>
 </gresources>

@@ -25,6 +25,7 @@
 #include "network/network-settings-window.h"
 #include "display/display-settings-window.h"
 #include "appearance/appearance-settings-window.h"
+#include "panel/panel-settings-window.h"
 
 #include <gnome-bluetooth-3.0/bluetooth-settings-widget.h>
 

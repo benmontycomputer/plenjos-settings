@@ -140,6 +140,7 @@ settings_window_init(SettingsWindow *self)
   NetworkSettingsWindow *network_settings = g_object_new(NETWORK_SETTINGS_TYPE_WINDOW, NULL);
   DisplaySettingsWindow *display_settings = g_object_new(DISPLAY_SETTINGS_TYPE_WINDOW, NULL);
   AppearanceSettingsWindow *appearance_settings = g_object_new(APPEARANCE_SETTINGS_TYPE_WINDOW, NULL);
+  PanelSettingsWindow *panel_settings = g_object_new(PANEL_SETTINGS_TYPE_WINDOW, NULL);
 
   gtk_stack_add_titled(self->main_stack, GTK_WIDGET(network_settings), "Network", "Network");
   gtk_box_append(self->sidebar_box, create_stack_item(self, "Network", "Network", "preferences-system-network"));
@@ -164,6 +165,6 @@ settings_window_init(SettingsWindow *self)
   gtk_stack_add_titled(self->main_stack, GTK_WIDGET(appearance_settings), "Appearance", "Appearance");
   gtk_box_append(self->sidebar_box, create_stack_item(self, "Appearance", "Appearance", "preferences-desktop-theme"));
 
-  gtk_stack_add_titled(self->main_stack, gtk_label_new("Test 3"), "test3", "Test3");
-  gtk_box_append(self->sidebar_box, create_stack_item(self, "test3", "Test3", "preferences-system"));
+  gtk_stack_add_titled(self->main_stack, GTK_WIDGET(panel_settings), "Panel", "Panel");
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "Panel", "Panel", "preferences-desktop-panel"));
 }
