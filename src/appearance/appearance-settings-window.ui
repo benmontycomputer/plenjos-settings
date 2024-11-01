@@ -52,8 +52,9 @@
                       <object class="GtkBox">
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkImage" id="bg_image">
-                            <property name="width-request">240</property>
+                          <object class="GtkPicture" id="bg_picture">
+                            <property name="margin-top">24</property>
+                            <property name="margin-bottom">24</property>
                             <property name="height-request">240</property>
                           </object>
                         </child>
