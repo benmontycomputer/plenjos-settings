@@ -61,14 +61,9 @@ static void on_bg_selector_ready(GObject *source_object, GAsyncResult *res, Appe
   printf("%s\n", path);
   fflush(stdout);
 
-  size_t path_uri_len = strlen(path) + strlen("file://") + 1;
-  char *path_uri = malloc(path_uri_len);
-  snprintf(path_uri, path_uri_len, "file://%s", path);
+  g_settings_set_string(self->bg_settings, "background", path);
 
-  g_settings_set_string(self->bg_settings, "picture-uri", path_uri);
-  g_settings_set_string(self->bg_settings, "picture-uri-dark", path_uri);
-
-  free(path_uri);
+  free(path);
 }
 
 static void on_bg_selector_activated(AdwActionRow *bg_selector, AppearanceSettingsWindow *self)
@@ -141,16 +136,32 @@ static void load_backgrounds_wrap(GTask *task, GObject *source_object, Appearanc
   load_backgrounds("/usr/share/backgrounds", self, true);
 }
 
-static void on_theme_selected(AdwComboRow *row, gpointer *idk, AppearanceSettingsWindow *self) {
+static void on_theme_selected(AdwComboRow *row, gpointer *idk, AppearanceSettingsWindow *self)
+{
   guint item = adw_combo_row_get_selected(row);
 
-  if (item == 1) {
+  if (item == 1)
+  {
     g_settings_set_string(self->interface_settings, "color-scheme", "prefer-light");
-  } else if (item == 2) {
+  }
+  else if (item == 2)
+  {
     g_settings_set_string(self->interface_settings, "color-scheme", "prefer-dark");
-  } else {
+  }
+  else
+  {
     g_settings_set_string(self->interface_settings, "color-scheme", "default");
   }
+}
+
+static void
+update_bg(GSettings *bg_settings, gchar *key, AppearanceSettingsWindow *self)
+{
+  char *bg = g_settings_get_string(bg_settings, key);
+
+  gtk_image_set_from_file(self->bg_image, bg);
+
+  free(bg);
 }
 
 static void appearance_settings_window_init(AppearanceSettingsWindow *self)
@@ -159,28 +170,23 @@ static void appearance_settings_window_init(AppearanceSettingsWindow *self)
 
   self->file_dialog = gtk_file_dialog_new();
 
-  self->bg_settings = g_settings_new("org.gnome.desktop.background");
+  self->bg_settings = g_settings_new("com.plenjos.shell.desktop");
   self->interface_settings = g_settings_new("org.gnome.desktop.interface");
 
   char *scheme = g_settings_get_string(self->interface_settings, "color-scheme");
 
   if (!strcmp(scheme, "prefer-dark"))
   {
-    char *bg = g_settings_get_string(self->bg_settings, "picture-uri-dark");
-    gtk_image_set_from_file(self->bg_image, (char *)(bg + 7));
-    free(bg);
-
     adw_combo_row_set_selected(self->theme_combo_row, 2);
   }
   else
   {
-    char *bg = g_settings_get_string(self->bg_settings, "picture-uri");
-    gtk_image_set_from_file(self->bg_image, (char *)(bg + 7));
-    free(bg);
-
-    if (!strcmp(scheme, "prefer-light")) {
+    if (!strcmp(scheme, "prefer-light"))
+    {
       adw_combo_row_set_selected(self->theme_combo_row, 1);
-    } else {
+    }
+    else
+    {
       adw_combo_row_set_selected(self->theme_combo_row, 0);
     }
   }
@@ -189,6 +195,11 @@ static void appearance_settings_window_init(AppearanceSettingsWindow *self)
   {
     free(scheme);
   }
+
+  g_signal_connect(self->bg_settings, "changed::background",
+                   G_CALLBACK(update_bg), self);
+
+  update_bg(self->bg_settings, "background", self);
 
   gtk_list_box_row_set_activatable(GTK_LIST_BOX_ROW(self->bg_selector), TRUE);
   g_signal_connect(self->bg_selector, "activated", G_CALLBACK(on_bg_selector_activated), self);
