@@ -166,5 +166,5 @@ settings_window_init(SettingsWindow *self)
   gtk_box_append(self->sidebar_box, create_stack_item(self, "Appearance", "Appearance", "preferences-desktop-theme"));
 
   gtk_stack_add_titled(self->main_stack, GTK_WIDGET(panel_settings), "Panel", "Panel");
-  gtk_box_append(self->sidebar_box, create_stack_item(self, "Panel", "Panel", "preferences-desktop-panel"));
+  gtk_box_append(self->sidebar_box, create_stack_item(self, "Panel", "Panel", "panel"));
 }
