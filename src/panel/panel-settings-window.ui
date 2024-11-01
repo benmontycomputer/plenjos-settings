@@ -22,7 +22,7 @@
             <property name="vexpand">True</property>
             <child>
               <object class="AdwPreferencesGroup" id="style_group">
-                <property name="title">Style</property>
+                <property name="title" translatable="yes">Style</property>
                 <child>
                   <object class="AdwComboRow" id="panel_style_combo_row">
                     <property name="title" translatable="yes">Taskbar Style</property>
@@ -39,57 +39,30 @@
                     </property>
                   </object>
                 </child>
-              </object>
-            </child>
-            <child>
-              <object class="AdwPreferencesGroup" id="bg_group">
-                <property name="title">Wallpaper</property>
                 <child>
-                  <object class="AdwPreferencesRow">
-                    <property name="title" translatable="yes">File</property>
-                    <property name="sensitive">False</property>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="orientation">vertical</property>
-                        <child>
-                          <object class="GtkImage" id="bg_image">
-                            <property name="width-request">240</property>
-                            <property name="height-request">240</property>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkFlowBox" id="bg_flow_box">
-                            <property name="hexpand">True</property>
-                            <property name="vexpand">True</property>
-                            <property name="halign">fill</property>
-                            <property name="valign">fill</property>
-                            <property name="homogeneous">True</property>
-                          </object>
-                        </child>
+                  <object class="AdwSpinRow">
+                    <property name="title" translatable="yes">Brightness</property>
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">0</property>
+                        <property name="upper">100</property>
+                        <property name="value">50</property>
+                        <property name="page-increment">10</property>
+                        <property name="step-increment">1</property>
                       </object>
-                    </child>
+                    </property>
                   </object>
                 </child>
                 <child>
-                  <object class="AdwActionRow" id="bg_selector">
-                    <property name="title" translatable="yes">Background</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="icon-name">system-file-manager-symbolic</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="AdwComboRow" id="bg_placement">
-                    <property name="title" translatable="yes">Placement</property>
-                    <property name="model">
-                      <object class="GtkStringList">
-                        <items>
-                          <item translatable="yes">Center</item>
-                          <item translatable="yes">Stretch</item>
-                          <item translatable="yes">Fill</item>
-                        </items>
+                  <object class="AdwSpinRow">
+                    <property name="title" translatable="yes">Opacity</property>
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">0</property>
+                        <property name="upper">100</property>
+                        <property name="value">50</property>
+                        <property name="page-increment">10</property>
+                        <property name="step-increment">1</property>
                       </object>
                     </property>
                   </object>
